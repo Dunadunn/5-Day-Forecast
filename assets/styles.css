@@ -1,5 +1,3 @@
-/* styles.css */
-
 body {
     margin: 0;
     padding: 0;
@@ -100,17 +98,16 @@ body {
   }
   
   #forecast {
-    /* ... other styles ... */
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     flex-direction: column;
 }
 #forecast div {
-    /* ... other styles ... */
-    flex: 1 0 20%;  /* Grow and shrink as needed, base width 20% */
+    flex: 1 0 20%;  /*base width 20% */
 }
 
+/*Expected to swap to a vertical forecast for other screens */
 @media (min-width: 600px) {
     #forecast {
         flex-direction: row;

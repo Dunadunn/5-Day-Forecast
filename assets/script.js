@@ -15,23 +15,22 @@ function fetchWeatherData(cityName) {
             const lon = data[0].lon;
             const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
-            // Second fetch request to get the weather forecast
+            // Second fetch required to get the weather forecast
             return fetch(forecastUrl);
         })
         .then(response => response.json())
         .then(data => {
-            // Save to search history
+            // save search history
             const history = loadSearchHistory();
             if (!history.includes(cityName)) {
                 history.push(cityName);
                 saveSearchHistory(history);
             }
 
-            // Display weather data
             displayCurrentWeather(data);
             displayForecast(data);
 
-            // Update the search history display
+            // Needed to update the search history display
             displaySearchHistory();
         })
         .catch(error => {
@@ -40,12 +39,14 @@ function fetchWeatherData(cityName) {
         });
 }
 
+//Converting the date given from the API into weekdays
 function getWeekday(dateString) {
     const date = new Date(dateString);
     const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     return weekdays[date.getDay()];
 }
 
+// Fahrenheit is common in the US so we'll convert from Kelvin to Fahrenheit
 function kelvinToFahrenheit(kelvin) {
     return ((kelvin - 273.15) * 9/5) + 32;
 }
@@ -65,13 +66,13 @@ function displayCurrentWeather(data) {
 
 function displayForecast(data) {
     const forecastSection = document.getElementById('forecast');
-    forecastSection.innerHTML = '';  // Clear previous forecast
+    forecastSection.innerHTML = '';  // used to clear previous forecast
 
-    for (let i = 0; i < data.list.length; i += 8) {  // Pick one forecast every 24 hours
+    for (let i = 0; i < data.list.length; i += 8) { 
         const forecast = data.list[i];
         const date = forecast.dt_txt;
         const weekday = getWeekday(date);
-        const temperatureF = kelvinToFahrenheit(forecast.main.temp).toFixed(2);  // Convert to Fahrenheit and round to 2 decimal places
+        const temperatureF = kelvinToFahrenheit(forecast.main.temp).toFixed(2);  // This should convert to Fahrenheit and round to 2 decimal places
         const forecastElement = document.createElement('div');
         forecastElement.innerHTML = `
             <h4>${weekday}</h4>
